@@ -13,7 +13,7 @@ pipeline {
         // Шаг 1: Checkout кода из репозитория
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-repo.git'
+                git branch: 'main', url: 'https://github.com/hahaspell/Testy-sber.git'
             }
         }
 
