@@ -4,7 +4,7 @@ pipeline {
     environment {
         KUBECONFIG = credentials('kubeconfig')  // Укажите kubeconfig
         HELM_VERSION = "3.12.0"  // Версия Helm
-        CHART_NAME = "Testy-sber"  // Имя Helm Chart
+        CHART_NAME = "nginx-chart"  // Имя Helm Chart
         RELEASE_NAME = "nginx-release"  // Имя релиза
         NAMESPACE = "default"  // Namespace в Kubernetes
     }
