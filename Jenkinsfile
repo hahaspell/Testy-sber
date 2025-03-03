@@ -7,13 +7,15 @@ pipeline {
         CHART_NAME = "nginx-chart"  // Имя Helm Chart
         RELEASE_NAME = "nginx-release"  // Имя релиза
         NAMESPACE = "default"  // Namespace в Kubernetes
+        GIT_CREDENTIALS = credentials('243be552-750e-47c4-bb94-6d6fd32aa5f7')
     }
 
     stages {
         // Шаг 1: Checkout кода из репозитория
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/hahaspell/Testy-sber.git'
+                git branch: 'main', url: 'https://github.com/hahaspell/Testy-sber.git',
+                    credentialsId: '243be552-750e-47c4-bb94-6d6fd32aa5f7'
             }
         }
 
