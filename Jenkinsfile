@@ -8,41 +8,37 @@ pipeline {
         RELEASE_NAME = "nginx-release"  // Имя релиза
         NAMESPACE = "default"  // Namespace в Kubernetes
         GITHUB_TOKEN = credentials('github-token')  // Укажите ID вашего credential
+        PATH = "/home/jenkins/bin:${env.PATH}"
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: "https://${GITHUB_TOKEN}@github.com/hahaspell/Testy-sber.git"
+                git branch: 'main', url: 'https://github.com/hahaspell/Testy-sber.git'
             }
         }
 
-        // Шаг 2: Установка Helm
-stage('Install Helm') {
-    steps {
-        script {
-            sh """
-                mkdir -p /home/jenkins/bin
-                curl -LO https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
-                tar -zxvf helm-v3.12.0-linux-amd64.tar.gz
-                mv linux-amd64/helm /home/jenkins/bin/helm
-                export PATH=/home/jenkins/bin:$PATH
-                echo 'PATH updated to: $PATH'
-                helm version
-            """
-        }
-    }
-}
-
-
-        // Шаг 3: Развертывание приложения с использованием Helm
-        stage('Deploy with Helm') {
+        stage('Install Helm') {
             steps {
                 script {
                     sh """
-                        helm upgrade --install ${RELEASE_NAME} ./${CHART_NAME} \
-                            --namespace ${NAMESPACE} \
+                        mkdir -p /home/jenkins/bin
+                        curl -LO https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
+                        tar -zxvf helm-v3.12.0-linux-amd64.tar.gz
+                        mv linux-amd64/helm /home/jenkins/bin/helm
+                        echo 'PATH updated to: $PATH'
+                        helm version
+                    """
+                }
+            }
+        }
+
+        stage('Deploy with Helm') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    sh """
+                        helm upgrade --install nginx-release ./nginx-chart \
+                            --namespace default \
                             --kubeconfig ${KUBECONFIG}
                     """
                 }
