@@ -7,13 +7,14 @@ pipeline {
         CHART_NAME = "nginx-chart"  // Имя Helm Chart
         RELEASE_NAME = "nginx-release"  // Имя релиза
         NAMESPACE = "default"  // Namespace в Kubernetes
+        GITHUB_TOKEN = credentials('github-token')  // Укажите ID вашего credential
     }
 
     stages {
-        // Шаг 1: Checkout кода из репозитория
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/hahaspell/Testy-sber.git'
+                git branch: 'main',
+                    url: "https://${GITHUB_TOKEN}@github.com/hahaspell/Testy-sber.git"
             }
         }
 
