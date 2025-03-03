@@ -19,18 +19,21 @@ pipeline {
         }
 
         // Шаг 2: Установка Helm
-        stage('Install Helm') {
-            steps {
-                script {
-                    sh """
-                        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                        chmod 700 get_helm.sh
-                        ./get_helm.sh --no-sudo --version v${HELM_VERSION}
-                    """
-                    sh "helm version"
-                }
-            }
+stage('Install Helm') {
+    steps {
+        script {
+            sh """
+                mkdir -p /home/jenkins/bin
+                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+                chmod 700 get_helm.sh
+                ./get_helm.sh --no-sudo --version v${HELM_VERSION} --install-dir /home/jenkins/bin
+                export PATH=/home/jenkins/bin:$PATH
+            """
+            sh "helm version"
         }
+    }
+}
+
 
         // Шаг 3: Развертывание приложения с использованием Helm
         stage('Deploy with Helm') {
