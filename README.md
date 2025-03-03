@@ -1,8 +1,3 @@
 # Testy-sber
 
-token 11061a5c230f5ae888430631fd33184d95
 
-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
-
-
-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
