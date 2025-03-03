@@ -28,8 +28,9 @@ stage('Install Helm') {
                 tar -zxvf helm-v3.12.0-linux-amd64.tar.gz
                 mv linux-amd64/helm /home/jenkins/bin/helm
                 export PATH=/home/jenkins/bin:$PATH
+                echo 'PATH updated to: $PATH'
+                helm version
             """
-            sh "helm version"
         }
     }
 }
