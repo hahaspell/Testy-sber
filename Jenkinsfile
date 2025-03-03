@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sudo helm upgrade --install ${RELEASE_NAME} ./${CHART_NAME} \
+                        echo Ure459605|sudo -S helm upgrade --install ${RELEASE_NAME} ./${CHART_NAME} \
                             --namespace ${NAMESPACE} \
                             --kubeconfig ${KUBECONFIG}
                     """
