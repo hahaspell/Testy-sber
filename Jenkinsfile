@@ -24,9 +24,9 @@ stage('Install Helm') {
         script {
             sh """
                 mkdir -p /home/jenkins/bin
-                curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                chmod 700 get_helm.sh
-                ./get_helm.sh --no-sudo --version v${HELM_VERSION} --install-dir /home/jenkins/bin
+                curl -LO https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
+                tar -zxvf helm-v3.12.0-linux-amd64.tar.gz
+                mv linux-amd64/helm /home/jenkins/bin/helm
                 export PATH=/home/jenkins/bin:$PATH
             """
             sh "helm version"
