@@ -43,10 +43,10 @@ pipeline {
                         chmod +x kubectl
                         mv kubectl /usr/local/bin/kubectl
                         kubectl version --client
-                    """
-                    }
+                     """
                 }
             }
+        }
         
         stage('Deploy with Helm') {
             steps {
